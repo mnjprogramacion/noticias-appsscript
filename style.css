@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #F1F0E8;
+    color: #333;
+}
+
+/* header */
+
+header {
+    background-color: #89A8B2;
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+/* nav */
+
+nav {
+    background-color: #E5E1DA;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+/* main */
+
+main {
+    display: flex;
+    margin: 20px;
+    gap: 20px;
+}
+
+/* aside */
+
+aside {
+    background-color: #B3C8CF;
+    padding: 15px;
+    width: 25%;
+}
+
+aside h3 {
+    margin-bottom: 10px;
+}
+
+/* noticias */
+
+section {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.noticia {
+    background-color: white;
+    padding: 20px;
+}
+
+/* footer */
+
+footer {
+    background-color: #E5E1DA;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.footerR {
+    background-color: #89A8B2;
+    color: white;
+    padding: 8px;
+    padding-top: 12px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.logo {
+    width: 40px;
+    margin: 0 10px;
+}
+
+/* contacto */
+
+.contacto {
+    background-color: #B3C8CF;
+    padding: 20px;
+    list-style: none;
+    margin: 20px;
+}
+
+.contacto h2 {
+    margin: 12px;
+    margin-bottom: 36px;
+    font-size: 24px;
+}
+
+.contacto ul {
+    list-style: none;
+    margin: 0 36px;
+}
+
+.contacto ul li {
+    margin: 12px 0;
+}
+
+/* sobrenosotros */
+
+.sobrenosotros {
+    background-color: #B3C8CF;
+    padding: 20px;
+    list-style: none;
+    margin: 20px;
+}
+
+.sobrenosotros h2 {
+    text-align: center;
+    margin: 20px;
+    font-size: 36px;
+}
+
+.sobrenosotros p {
+    text-align: justify;
+    margin: 18px;
+    margin-left: 120px;
+    margin-right: 120px;
+}
