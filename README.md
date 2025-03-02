@@ -1,1 +1,1 @@
-# noticias-appscript
+# noticias-appsscript
