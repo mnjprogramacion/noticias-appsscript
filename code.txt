@@ -1,0 +1,143 @@
+var sheet = SpreadsheetApp.openById("1j-MCmBGCLaaV_vBX7cCklb_vgVkPYUnSCTrsAs_FBow");
+var noticiasSheet = sheet.getSheetByName("NOTICIA");
+var noticia;
+var id = 0;
+
+// Devuelve un array con las últimas 10 noticias
+function arrayNoticias10() {
+  var data = noticiasSheet.getDataRange().getValues();
+
+  data.shift();
+  data.reverse();
+
+  // Columnas A (id), B (título), C (subtítulo), D (body), E (media), F (autor)
+
+  return data.slice(0, 10);
+}
+
+// Devuelve un array con todas las noticias
+function arrayNoticiasLR() {
+  var data = noticiasSheet.getDataRange().getValues();
+
+  data.shift();
+  data.reverse();
+
+  // Columnas A (id), B (título), C (subtítulo), D (body), E (media), F (autor)
+
+  return data;
+}
+
+// Crea el código HTML para el menú a la izquierda
+function obtenerNoticiasAside() {
+  var noticias = arrayNoticiasLR();
+  var html = '';
+
+  noticias.forEach(function(row, index) {
+    id = row[0];
+    var titulo = row[1];
+    var subtitulo = row[2];
+
+    html += '<article class="aside">';
+    html += `<a href="https://script.google.com/macros/s/AKfycbyjq6RhdiizAOATKkCWzpKA8o7nN_P3mPd8kdPDkrotp4pD541L4sVfbvOMV_soN16u/exec?id=${id}" target="_blank"><p>` + titulo + '</p></a>';
+    html += '</article>';
+  });
+
+  return html;
+}
+
+// Crea el código HTML con las 10 últimas noticias
+function obtenerNoticiasMain() {
+  var noticias = arrayNoticias10();
+  var html = '';
+
+  noticias.forEach(function(row, index) {
+    id = row[0];
+    var titulo = row[1];
+    var subtitulo = row[2];
+
+    html += '<article class="noticia">';
+    html += `<a href="https://script.google.com/macros/s/AKfycbyjq6RhdiizAOATKkCWzpKA8o7nN_P3mPd8kdPDkrotp4pD541L4sVfbvOMV_soN16u/exec?id=${id}" target="_blank"><h2>` + titulo + '</h2></a>';
+    html += '<p>' + subtitulo + '</p>';
+    html += '</article>';
+  });
+
+  return html;
+}
+
+// Crea el código HTML con todas las noticias
+function obtenerNoticiasMainLR() {
+  var noticias = arrayNoticiasLR();
+  var html = '';
+
+  noticias.forEach(function(row, index) {
+    id = row[0];
+    var titulo = row[1];
+    var subtitulo = row[2];
+
+    html += '<article class="noticia">';
+    html += `<a href="https://script.google.com/macros/s/AKfycbyjq6RhdiizAOATKkCWzpKA8o7nN_P3mPd8kdPDkrotp4pD541L4sVfbvOMV_soN16u/exec?id=${id}" target="_blank"><h2>` + titulo + '</h2></a>';
+    html += '<p>' + subtitulo + '</p>';
+    html += '</article>';
+  });
+
+  return html;
+}
+
+function obtenerNoticia(id) {
+  var noticias = noticiasSheet.getDataRange().getValues();
+  // var noticias = arrayNoticias10();
+  var html = '';
+
+  for (var i = 0; i < noticias.length; i++) { 
+    if (noticias[i][0] == id) { 
+      return {
+        id: id,
+        titulo: noticias[i][1],
+        subtitulo: noticias[i][2],
+        body: noticias[i][3],
+        media: noticias[i][4],
+        autor: noticias[i][5]
+      };
+    }
+  }
+  return null;
+}
+
+function obtenerTitulo(id) {
+  noticia = obtenerNoticia(id);
+  
+  return noticia.titulo;
+}
+
+function doGet(e) {
+  Logger.log("ID recibido: " + e.parameter.id);
+
+  var template;
+
+  if (e.parameter.id) {
+
+    if (e.parameter.id == 0) {
+      template = HtmlService.createTemplateFromFile("indexLR");
+      return template.evaluate();
+    } else if (e.parameter.id == -1) {
+      template = HtmlService.createTemplateFromFile("contacto");
+      return template.evaluate();
+    } else if (e.parameter.id == -2) {
+      template = HtmlService.createTemplateFromFile("sobrenosotros");
+      return template.evaluate();
+    } else {
+
+      noticia = obtenerNoticia(e.parameter.id);
+
+    if (!noticia) {
+      return HtmlService.createHtmlOutput("<h1>Noticia no encontrada</h1>");
+    }
+    template = HtmlService.createTemplateFromFile("noticia");
+    template.noticia = noticia;
+    }
+  } else { 
+    template = HtmlService.createTemplateFromFile("index");
+  }
+
+  return template.evaluate();
+}
